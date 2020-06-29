@@ -1,0 +1,16 @@
+{
+  "name": "roamer",
+  "version": "1.0.0",
+  "description": "A lightweight NodeJs http framework and router",
+  "main": "roamer.js",
+  "scripts": {},
+  "keywords": [
+    "roamer",
+    "framework",
+    "router",
+    "http"
+  ],
+  "author": "Noah Hein",
+  "license": "MIT",
+  "repository": "https://github.com/Nephr0s/roamer"
+}
