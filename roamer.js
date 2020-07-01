@@ -1,12 +1,16 @@
 //Modules
 let http = require("http");
-const url = require("url");
-let Router = require('./lib/router');
+let url = require("url");
 
-//Get router class
+//Router
+let Router = require("./lib/router");
 exports.Router = Router;
 
-//Private vars
+//Req/res (Add custom req/res methods here)
+let Request = require("./lib/request");
+let Response = require("./lib/response");
+
+//Vars
 let server  = null;
 let host = null;
 let port = null;
@@ -49,28 +53,21 @@ exports.createServer = function createServer(options, requestListener) {
         let pathName = parsedURL.pathname;
         let directories = pathName.replace(/^\/+|\/+$/g, "").split("/");
 
-        //Get potential route parameters / update pathname
-        let routeParameters = {};
+        //Check for wildcards
         if (directories.some(r=> Object.keys(Router.wildcards).includes(r))) {
-            let routeParameterKeys = Object.keys(Router.wildcards).filter(value => directories.includes(value));
-            let routeParameterValues = [];
-            if (routeParameterKeys.length > 0) {
-                for (let i = 0; i < routeParameterKeys.length; i++) {
-                    routeParameterValues.push(directories[directories.indexOf(routeParameterKeys[i]) + 1]);
-                    routeParameters[Router.wildcards[routeParameterKeys[i]]] =
-                        directories[directories.indexOf(routeParameterKeys[i]) + 1];
-                }
-                directories = directories.filter(n => !routeParameterValues.includes(n));
-                pathName = directories.map(i => "/" + i);
-                pathName = pathName.join("");
+            let wildcardKeys = Object.keys(Router.wildcards);
+            for (let i = 0; i < wildcardKeys.length; i++) {
+                delete directories[directories.indexOf(wildcardKeys[i]) + 1];
             }
+            pathName = directories.map(i => "/" + i);
+            pathName = pathName.join("");
         }
 
         //Find handler for request or direct to invalid response
         let handler =
             typeof Router.routes[method][pathName] !== "undefined" ?
                 Router.routes[method][pathName] : Router.routes["INVALID"];
-        handler(req, res, routeParameters);
+        handler(req, res);
 
     });
 }
