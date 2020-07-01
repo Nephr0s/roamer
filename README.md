@@ -42,7 +42,7 @@ roamer.listener(function(error) {
   }
 });
 ```
-You can then easily add routing with the router method for the desired http method. The modeule currently only has get and post methods. The first parameter represents the route path for the request made. The second parameter is the handler containing the http request and response parameters. **Make sure you call res.end(); to end the response**
+You can then easily add routing with the router method for the desired http method. The first parameter represents the route path for the request made. The second parameter is the handler containing the http request and response parameters. There is also an all() method which adds a handler for any http method. **Make sure you call res.end(); to end the response**
 ```js
 router.get("/", function(req, res) {
   res.write("Hello World!");
@@ -63,11 +63,36 @@ router.invalid(function(req, res) {
 ```
 Similary to express roamer has a wildcard system for route paths. This allows the user to add directories with "wildcards". Wildcards are paths that can easily be changed by the incoming request. You can access the route paramters from the resulting wildcards by adding the parameter. A wildcard is declared by the ":". Note it must have a directory preceding it, because the directory signifies a specific wildcard.
 ```js
-router.get("/profile/:id", function(req, res, routeParameters) {
-  console.log(routeParamters);
+router.get("/profile/:id", function(req, res) {
+  console.log(req.routeParamters);
   res.write("Invalid route!");
   res.end();
 });
 ```
 The route parameters are returned as an object where the wilcard name is "id" and the value is the input request value. 
 
+##Custom res methods
+###res.sendFile(file);
+Sends file based on file locatin parameter. Note: has to be full file location
+###res.sendJson(domain);
+Sends a json based on object. If sending to another domain add (this is required because cors)
+###res.sendCookies(cookies, domain);
+Sends cookie(s) in object. Use the following object format to customize cookie.
+```js
+let cookies = {
+  cookieName1 : {
+    data : "cookie stuff goes here",
+    httpOnly : true,
+    path : "/",
+    domain : ".github.com",
+    expires : new Date(Date.now() + 60 * 24 * 60 * 60000)
+  },
+  cookieName2 : {
+    data : "cookie stuff goes here",
+    httpOnly : true,
+    path : "/",
+    domain : ".github.com",
+    expires : new Date(Date.now() + 60 * 24 * 60 * 60000)
+   }
+}
+```
