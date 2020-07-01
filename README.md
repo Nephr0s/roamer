@@ -14,10 +14,11 @@ $ npm install roamer
 ```
 
 ## Documentation
-To import roamer use
+To import the roamer module use
 ```js
 const roamer = require('roamer');
 ```
+### Web server
 To create an http server and router use
 ```js
 roamer.createServer();
@@ -42,6 +43,7 @@ roamer.listener(function(error) {
   }
 });
 ```
+## Routing
 You can then easily add routing with the router method for the desired http method. The first parameter represents the route path for the request made. The second parameter is the handler containing the http request and response parameters. There is also an all() method which adds a handler for any http method. **Make sure you call res.end(); to end the response**
 ```js
 router.get("/", function(req, res) {
@@ -59,6 +61,7 @@ router.all("/all", function(req, res) {
   res.end();
 });
 ```
+#### Invalid route
 The router invalid method is used to set the default invalid response. The invalid response is returned if an invalid request is made. If the user does not set an invalid response the default will be used.
 ```js
 router.invalid(function(req, res) {
@@ -66,6 +69,7 @@ router.invalid(function(req, res) {
   res.end();
 });
 ```
+#### Route parameters / wildcards
 Similary to express roamer has a wildcard system for route paths. This allows the user to add directories with "wildcards". Wildcards are paths that can easily be changed by the incoming request. You can access the route paramters from the resulting wildcards by adding the parameter. A wildcard is declared by the ":". Note it must have a directory preceding it, because the directory signifies a specific wildcard.
 ```js
 router.get("/profile/:id", function(req, res) {
@@ -77,21 +81,23 @@ router.get("/profile/:id", function(req, res) {
 The route parameters are returned as an object where the wilcard name is "id" and the value is the input request value.
 
 ## Custom req methods
-### req.routeParams();
+Below are all of the added req methods. Since the module is based on http, all of the default http methods are available.
+#### req.routeParams();
 Gets the route parameters from a potential wildcard request
-## req.params();
+#### req.params();
 Obtain the parameters from a request
-## req.cookies();
+#### req.cookies();
 Gets all of the cookies attached to a request from the client
-## req.post(callback);
+#### req.post(callback);
 Obtains all of the post data. Callback is needed, because getting post data is async
 
 ## Custom res methods
-### res.sendFile(file);
+Below are all of the added res methods. Since the module is based on http, all of the default http methods are available.
+#### res.sendFile(file);
 Sends file based on file locatin parameter. Note: has to be full file location
-### res.sendJson(domain);
+#### res.sendJson(domain);
 Sends a json based on object. If sending to another domain add (this is required because cors)
-### res.sendCookies(cookies, domain);
+#### res.sendCookies(cookies, domain);
 Sends cookie(s) in object. Use the following object format to customize cookie(s)
 ```js
 let cookies = {
