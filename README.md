@@ -50,7 +50,12 @@ router.get("/", function(req, res) {
 });
 
 router.post("/test", function(req, res) {
-  res.write("Hello World!");
+  res.write("Post request");
+  res.end();
+});
+
+router.all("/all", function(req, res) {
+  res.write("This works on every method!");
   res.end();
 });
 ```
@@ -69,15 +74,25 @@ router.get("/profile/:id", function(req, res) {
   res.end();
 });
 ```
-The route parameters are returned as an object where the wilcard name is "id" and the value is the input request value. 
+The route parameters are returned as an object where the wilcard name is "id" and the value is the input request value.
 
-##Custom res methods
-###res.sendFile(file);
+## Custom req methods
+### req.routeParams();
+Gets the route parameters from a potential wildcard request
+## req.params();
+Obtain the parameters from a request
+## req.cookies();
+Gets all of the cookies attached to a request from the client
+## req.post(callback);
+Obtains all of the post data. Callback is needed, because getting post data is async
+
+## Custom res methods
+### res.sendFile(file);
 Sends file based on file locatin parameter. Note: has to be full file location
-###res.sendJson(domain);
+### res.sendJson(domain);
 Sends a json based on object. If sending to another domain add (this is required because cors)
-###res.sendCookies(cookies, domain);
-Sends cookie(s) in object. Use the following object format to customize cookie.
+### res.sendCookies(cookies, domain);
+Sends cookie(s) in object. Use the following object format to customize cookie(s)
 ```js
 let cookies = {
   cookieName1 : {
