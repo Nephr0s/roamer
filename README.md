@@ -3,7 +3,7 @@
 Lightweight [NodeJs](https://nodejs.org/en/) http framework and router
 
 ## Philosophy
-Roamer was designed after the NodeJs module [Express](https://expressjs.com/). Express is a wonderful framework but often removes customization, personalization, and speed for standardization and ease of use. This isn't a bad thing but results in slower request handling. It also prevents creativity because their are trauches of code the package was built upon making the module hard to redesign. Roamer was designed to be built with the same framework as express, allowing the same style of routing but without all the extras. This allows the user to eassily customize and personzlize roamer to there liking. Roamer also has a very minimalistic design allowing the user to easily add new things and edit the source code.
+Roamer was designed after the NodeJs module [Express](https://expressjs.com/). Express is a wonderful framework but often removes customization, personalization, and speed for standardization and ease of use. This isn't a bad thing but results in slower request handling. It also prevents creativity because their are traunches of code the package was built upon making the module hard to redesign. Roamer was designed to be built with the same framework as express, allowing the same style of routing but without all the extras. This allows the user to eassily customize and personzlize roamer to there liking. Roamer also has a very minimalistic design allowing the user to easily add new things and edit the source code.
 
 ## **Instalation**
 Before installing, make sure you have NodeJs installed. The project must have a `package.json` file. Roamer can be installed through [npm](https://www.npmjs.com/org).
